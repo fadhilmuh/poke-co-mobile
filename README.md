@@ -97,9 +97,9 @@ Berikut adalah daftar widget yang digunakan dalam tugas ini beserta penjelasan f
 
             HomeButtons(this.name, this.icon);
         }
-        ```
-        dan juga ditambahkan kode berikut pada `menu.dart`:
-        ```dart
+    ```
+    dan juga ditambahkan kode berikut pada [menu.dart](lib/menu.dart):
+    ```dart
         class ShopCard extends StatelessWidget {
         final HomeButtons item;
 
