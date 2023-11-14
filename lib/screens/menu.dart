@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
-class HomeButtons {
-  final String name;
-  final IconData icon;
-
-  HomeButtons(this.name, this.icon);
-}
+import 'package:poke_co/screens/item_list.dart';
+import 'package:poke_co/screens/item_form.dart';
+import 'package:poke_co/widgets/left_drawer.dart';
+import 'package:poke_co/widgets/home_card.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -39,6 +36,8 @@ class MyHomePage extends StatelessWidget {
           'Character Card Storage',
         ),
       ),
+      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -106,6 +105,27 @@ class ShopCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+            // Navigate ke route yang sesuai (tergantung jenis tombol)
+            if (item.name == "Tambah Item") {
+              // Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ItemFormPage.
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ItemFormPage(),
+                ),
+              );
+            }
+
+            if (item.name == "Lihat Item") {
+              // Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ItemListPage.
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ItemListPage(),
+                ),
+              );
+            }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
