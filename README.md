@@ -21,6 +21,104 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 <details>
+<summary style="color: white; font-size: 30px">Tugas 9</summary>
+
+## Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+Benar, kita bisa mengambil data JSON tanpa harus membuat model terlebih dahulu. Kita bisa menggunakan metode seperti http.get di Flutter untuk mendapatkan data dari API. Meskipun demikian, penggunaan model sering kali disarankan untuk memudahkan dalam mengelola dan mem-parsing data.
+
+##  Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+Dalam konteks web dan pengembangan aplikasi, cookie biasanya digunakan untuk menyimpan informasi tentang sesi pengguna atau preferensi pengguna. Dalam konteks permintaan HTTP, cookie dapat dikirim dari klien ke server dalam header permintaan untuk memberi tahu server tentang status atau konteks tertentu dari klien.
+
+Dalam konteks ini, Provider dalam Flutter digunakan untuk mengatur state dan memberikan instance CookieRequest (library dari Django) ke seluruh aplikasi. Ini memfasilitasi berbagai bagian aplikasi untuk mengakses dan memanfaatkan instance CookieRequest tanpa perlu membuatnya lagi.
+
+Jika CookieRequest mengandung informasi yang diperlukan untuk berinteraksi dengan server Django, seperti token atau informasi otentikasi lainnya, maka memberikan instance ini ke seluruh aplikasi memastikan bahwa semua bagian aplikasi yang membutuhkan informasi otentikasi dapat mengaksesnya dengan mudah.
+
+##  Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+Mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter melibatkan beberapa langkah:
+
+1. **Membuat Request HTTP**: Pertama, kita perlu membuat request HTTP ke endpoint yang menyediakan data dalam format JSON³. Ini biasanya dilakukan menggunakan package `http`¹.
+
+```dart
+final response = await Uri.parse('https://www.example.com');
+```
+
+2. **Decoding Data JSON**: Setelah mendapatkan response, kita perlu mendecode data JSON menjadi format yang dapat dipahami oleh Dart. Ini dapat dilakukan dengan menggunakan fungsi `jsonDecode`².
+
+```dart
+var data = jsonDecode(response.body);
+```
+
+5. **Menampilkan Data pada Widget**: Setelah data berhasil diubah menjadi model, data tersebut dapat ditampilkan pada widget Flutter. Misalnya, kita dapat menampilkan nama dan umur dari contoh di atas pada widget Text¹.
+
+```dart
+Text('Name: ${sample.name}, Age: ${sample.age}');
+```
+
+Dengan demikian, data dari JSON dapat diambil dan ditampilkan pada Flutter..
+
+## Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+Gunakan form atau metode input lainnya untuk mengambil informasi akun dari pengguna.
+
+1. Buat fungsi masuk, daftar (bonus), dan keluar dalam aplikasi baru untuk otentikasi flutter.
+
+2. Otentikasi ke Django: Kirimkan data akun ke backend Django melalui permintaan request.login (cookies + fungsi masuk dari paket) dan lakukan proses otentikasi di masuk Django.
+
+3. Django mengirimkan data json yang dibutuhkan untuk validasi dan memasukkan pesan dalam flutter yang menunjukkan bahwa proses masuk berhasil atau tidak.
+
+##  Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+
+Berikut adalah daftar widget yang digunakan dalam tugas:
+
+- **MaterialApp**: Widget utama yang digunakan untuk mengatur konfigurasi aplikasi Flutter.
+- **Scaffold**: Widget yang memberikan struktur dasar untuk tampilan visual aplikasi, termasuk AppBar dan body.
+- **AppBar**: Menampilkan bilah aplikasi di bagian atas layar.
+- **Container**: Digunakan untuk memberikan gaya dengan latar belakang gradient.
+- **Column**: Mengatur widget anak secara vertikal.
+- **Stack**: Menempatkan widget anak di atas satu sama lain.
+- **Text**: Menampilkan teks dengan gaya tertentu.
+- **TextField**: Input teks untuk memasukkan username dan password.
+- **ElevatedButton**: Tombol dengan latar belakang terisi. Digunakan untuk tombol masuk.
+- **Navigator**: Digunakan untuk navigasi antar halaman.
+- **Form**: Kontainer untuk elemen formulir. Memungkinkan validasi dan pengiriman formulir.
+- **GlobalKey**: Kunci global untuk mengakses state Form.
+- **TextFormField**: Elemen formulir khusus untuk menangani input teks.
+- **Icon**: Ikon grafis.
+- **Navigator**: Digunakan untuk navigasi antar halaman.
+- **Drawer**: Menu sisi kiri yang dapat diakses dengan menggeser dari kiri.
+- **FutureBuilder**: Widget untuk membangun antarmuka berdasarkan hasil masa depan (asynchronous).
+- **ListView.builder**: Menampilkan daftar item dengan builder callback.
+- **InkWell**: Widget yang mendeteksi ketukan dan memberikan respons visual. Digunakan untuk membuat teks "Buat Akun Baru" dapat diklik.
+
+## Implementasi
+
+Tahapan pada tugas ini:
+- Install seluruh dependensi:
+  ```shell
+  flutter pub add provider
+  flutter pub add pbp_django_auth
+  flutter pub add http
+  ```
+- Membuat app authentication pada tugas django sebelumnya, dan mengkonfigurasi views.py untuk mengolah request yang akan dikirim dari proyek flutter termasuk login, logout, dan register.
+
+- Membuat laman login (login.dart) dan laman register (register.dart)
+
+- Mengkonfigurasi button logout pada main.dart agar dapat melogoutkan user
+
+- QuickType untuk membuat model flutter dari JSON. Model ada pada models\character.dart
+
+- Mengkonfigurasi views.py pada app main pada tugas django sebelumnya untuk menghandle request untuk mengambil data berdasarkan user
+
+- Mengubah item_list.dart sehingga hanya menampilkan data sesuai dengan user yang login
+
+- Mengkonfigurasi semua navigasi agar aplikasi flutter berjalan dengan seharusnya
+
+</details>
+
+<details>
 <summary style="color: white; font-size: 30px">Tugas 8</summary>
 
 ## Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!

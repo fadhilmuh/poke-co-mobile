@@ -1,6 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:poke_co/screens/menu.dart';
 import 'package:poke_co/widgets/left_drawer.dart';
-import 'package:poke_co/models/character.dart'; 
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+
+
 
 class ItemFormPage extends StatefulWidget {
   const ItemFormPage({super.key});
@@ -16,9 +21,11 @@ class _ItemFormPageState extends State<ItemFormPage> {
   String _description = "";
   String _rarity = "";
   int _power = 0;
-
+  
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -166,41 +173,39 @@ class _ItemFormPageState extends State<ItemFormPage> {
                       backgroundColor:
                           MaterialStateProperty.all(Colors.indigo),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         // Tambahkan ke model
-                        Character listItem = Character(_name, _amount, _description, _rarity, _power);
-                        Character.listItem.add(listItem);
-
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Koleksi berhasil tersimpan'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama: $_name'),
-                                    Text('Jumlah: $_amount'),
-                                    Text('Deskripsi: $_description'),
-                                    Text('Rarity: $_rarity'),
-                                    Text('Power: $_power'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        // Character listItem = Character(_name, _amount, _description, _rarity, _power);
+                        // Character.listItem.add(listItem);
+                        final response = await request.postJson(
+                          "http://127.0.0.1:8000/create-flutter/", 
+                          jsonEncode(<String, String>{
+                            'name':_name,
+                            'amount':_amount.toString(),
+                            'description':_description,
+                            'rarity':_rarity,
+                            'power':_power.toString(),
+                          })
                         );
+
+                        if (response['status'] == 'success'){
+                          ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                              content:Text("Koleksi berhasil tersimpan"),
+                            ));
+                            Navigator.pushReplacement(
+                              context, 
+                              MaterialPageRoute(builder: (context) => MyHomePage()),
+                            );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                              content:
+                                  Text("Terdapat kesalahan, silakan coba lagi."),
+                          ));
+                        }
+
                       _formKey.currentState!.reset();
                       }
                     },
