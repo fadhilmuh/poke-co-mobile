@@ -22,7 +22,7 @@ class _ItemPageState extends State<ItemPage> {
       
       // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
       var url = Uri.parse(
-          'http://127.0.0.1:8000/json-user/$username/');
+          'https://fadhil-muhammad23-tugas.pbp.cs.ui.ac.id/json-user/$username/');
       var response = await http.get(
           url,
           headers: {"Content-Type": "application/json"},

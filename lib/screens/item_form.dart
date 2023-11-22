@@ -179,7 +179,7 @@ class _ItemFormPageState extends State<ItemFormPage> {
                         // Character listItem = Character(_name, _amount, _description, _rarity, _power);
                         // Character.listItem.add(listItem);
                         final response = await request.postJson(
-                          "http://127.0.0.1:8000/create-flutter/", 
+                          "https://fadhil-muhammad23-tugas.pbp.cs.ui.ac.id/create-flutter/", 
                           jsonEncode(<String, String>{
                             'name':_name,
                             'amount':_amount.toString(),
